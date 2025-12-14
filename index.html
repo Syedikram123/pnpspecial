@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year - New Juice Center</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Fireworks Background */
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: black;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      padding: 60px 0;
+    }
+
+    h1 {
+      font-size: 45px;
+      font-weight: 700;
+      color: #ffe066;
+      text-shadow: 0 0 18px #ffcc00;
+    }
+
+    h2 {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffcd4d;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #f1f1f1;
+    }
+
+    .contact-box {
+      margin-top: 40px;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    .contact-box h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #ffd369;
+    }
+
+    /* Social Icons */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .social-links a {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      color: white;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      background: #ffe066;
+      color: #000;
+      transform: scale(1.15);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-bottom: 40px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    footer a {
+      color: #ffe066;
+      text-decoration: none;
+    }
+
+    @media (max-width: 375px) {
+      .newyear-heading {
+        font-size: 37px;
+      }
+    }
+
+    /* Name Screen */
+    #nameScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      z-index: 10;
+      text-align: center;
+    }
+
+    #nameScreen input {
+      width: 70%;
+      max-width: 300px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 18px;
+      outline: none;
+      text-align: center;
+    }
+
+    #nameScreen button {
+      padding: 10px 24px;
+      font-size: 18px;
+      border: none;
+      background: #ffe066;
+      color: black;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAME ASK SCREEN -->
+  <div id="nameScreen">
+    <h2 style="font-size: 26px;">What's your name?</h2>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button onclick="showMainPage()">Continue</button>
+  </div>
+
+  <canvas id="fireworksCanvas"></canvas>
+
+  <div class="container">
+    <h1 id="wishText" class="newyear-heading">Happy New Year</h1>
+    <h2 id="shopName"></h2>
+    <p id="shopDesc"></p>
+    <div class="contact-box">
+      <h3>Contact Us</h3>
+
+      <div class="social-links">
+
+  <a id="callBtn" href="#" style="display:none">
+    <i class="fa-solid fa-phone"></i>
+  </a>
+
+  <a id="whatsappBtn" href="#" target="_blank" style="display:none">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <a id="locationBtn" href="#" target="_blank" style="display:none">
+    <i class="fa-solid fa-location-dot"></i>
+  </a>
+
+  <a id="instaBtn" href="#" target="_blank" style="display:none">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+
+</div>
+
+    </div>
+
+    <footer>
+      <a href="https://wa.me/918951337609"><strong>Get a website like this for your shop — Click here</strong></a>
+    </footer>
+  </div>
+
+  <!-- Fireworks Script -->
+  <script>
+    // CONTINUE → SAVE NAME → SHOW MAIN PAGE + PLAY AUDIO
+    function showMainPage() {
+      let name = document.getElementById("username").value.trim();
+      if (name === "") name = "Friend";
+      localStorage.setItem("nyName", name);
+
+      // PLAY AUDIO HERE (USER CLICKED BUTTON)
+      document.getElementById("bgSound").play();
+
+      document.getElementById("nameScreen").classList.add("fade-out");
+
+      setTimeout(() => {
+        document.getElementById("nameScreen").style.display = "none";
+      }, 1000);
+
+      const userName = localStorage.getItem("nyName") || "Friend";
+      document.getElementById("wishText").innerHTML =
+        `Happy New Year<br>${userName}`;
+    }
+
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    onresize = () => {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    };
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    class Firework {
+      constructor() {
+        this.x = random(0, canvas.width);
+        this.y = canvas.height;
+        this.targetY = random(50, canvas.height / 2);
+        this.speed = random(3, 6);
+        this.boom = false;
+        this.particles = [];
+      }
+
+      update() {
+        if (!this.boom) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.boom = true;
+            for (let i = 0; i < 40; i++) {
+              this.particles.push(new Particle(this.x, this.y));
+            }
+          }
+        }
+      }
+
+      draw() {
+        if (!this.boom) {
+          ctx.fillStyle = "white";
+          ctx.fillRect(this.x, this.y, 3, 6);
+        }
+      }
+    }
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.speedX = random(-3, 3);
+        this.speedY = random(-3, 3);
+        this.alpha = 1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.02;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(255,200,80,${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    let fireworks = [];
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (Math.random() < 0.05) {
+        fireworks.push(new Firework());
+      }
+
+      fireworks = fireworks.filter(f => !f.boom || f.particles.length > 0);
+
+      fireworks.forEach(f => {
+        f.update();
+        f.draw();
+
+        if (f.boom) {
+          f.particles.forEach((p, i) => {
+            p.update();
+            p.draw();
+            if (p.alpha <= 0) f.particles.splice(i, 1);
+          });
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+  <!-- Sound -->
+  <audio id="bgSound" src="assets/crackers.mp3" loop></audio>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const shopId = params.get("id");
+
+  fetch("https://script.google.com/macros/s/AKfycbzRFW_7pAQsfmSMPPloWVwO5iUBd6VzfXdvCpSuR6Xk8CtsDFwF8nJnFpEXW0PGoUh6/exec?id=" + shopId)
+    .then(res => res.json())
+    .then(data => {
+
+      document.getElementById("shopName").innerText =
+        `— ${data.shop_name} —`;
+
+      document.getElementById("shopDesc").innerText =
+        data.description;
+
+      if (data.phone) {
+        const call = document.getElementById("callBtn");
+        call.href = "tel:" + data.phone;
+        call.style.display = "flex";
+      }
+
+      if (data.whatsapp) {
+        const wa = document.getElementById("whatsappBtn");
+        wa.href = "https://wa.me/" + data.whatsapp;
+        wa.style.display = "flex";
+      }
+
+      if (data.location) {
+        const loc = document.getElementById("locationBtn");
+        loc.href = data.location;
+        loc.style.display = "flex";
+      }
+
+      if (data.instagram) {
+        const insta = document.getElementById("instaBtn");
+        insta.href = data.instagram;
+        insta.style.display = "flex";
+      }
+
+    })
+    .catch(() => alert("Invalid shop link"));
+</script>
+
+</body>
+</html>
