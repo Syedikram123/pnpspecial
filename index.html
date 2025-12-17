@@ -1,216 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy New Year</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy New Year</title>
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#000;color:#fff;text-align:center;overflow-x:hidden}
 
-    body {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      overflow-x: hidden;
-    }
+#fireworksCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1}
 
-    /* Fireworks Background */
-    #fireworksCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: black;
-    }
+.container{width:90%;max-width:600px;margin:auto;padding:60px 0}
 
-    .container {
-      width: 90%;
-      max-width: 600px;
-      margin: auto;
-      padding: 60px 0;
-    }
-
-    h1 {
+  h1 {
       font-size: 45px;
       font-weight: 700;
       color: #ffe066;
-      text-shadow: 0 0 21px #ffcc00;
-    }
+      text-shadow: 0 0 21px #ffcc00}
+	
+h2{margin-top:45px;font-size:24px;color:#ffcd4d}
 
-    h2 {
-      margin-top: 25px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffcd4d;
-    }
+.offer-btn{
+margin-top:40px;
+padding:16px 28px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ffe066;
+color:#000;
+font-weight:700;
+cursor:pointer;
+}
 
-    p {
-      margin-top: 45px;
-      font-size: 17px;
-      line-height: 1.7;
-      color: #f1f1f1;
-    }
+.offer-text{
+margin-top:50px;
+margin-bottom: 75px;
+font-size:28px;
+color:#7CFF6B;
+font-weight:700;
+}
 
-    .contact-box {
-      margin-top: 50px;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.11);
-      border-radius: 16px;
-      backdrop-filter: blur(6px);
-    }
+.contact-box{
+margin-top:45px;
+padding:35px;
+background:rgba(255,255,255,0.07);
+border-radius:16px;
+}
 
-    .contact-box h3 {
-      font-size: 22px;
-      margin-bottom: 15px;
-      color: #ffd369;
-    }
+.social-links{
+display:flex;
+justify-content:center;
+gap:16px;
+margin-top:15px;
+}
 
-    /* Social Icons */
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
+.social-links a{
+width:48px;height:48px;
+border-radius:50%;
+background:rgba(255,255,25s5,0.12);
+display:flex;align-items:center;justify-content:center;
+font-size:20px;color:#fff;
+}
 
-    .social-links a {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      color: white;
-      transition: 0.3s ease;
-      text-decoration: none;
-    }
+#nameScreen{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:20px;
+z-index:10;
+}
 
-    .social-links a:hover {
-      background: #ffe066;
-      color: #000;
-      transform: scale(1.15);
-    }
+#nameScreen input{
+padding:12px;
+font-size:18px;
+border-radius:8px;
+border:none;
+text-align:center;
+}
 
-    footer {
-      margin-top: 40px;
-      padding-bottom: 40px;
-      font-size: 14px;
-      opacity: 0.8;
-    }
+#nameScreen button{
+padding:10px 24px;
+font-size:18px;
+background:#ffe066;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
 
-    footer a {
-      color: #ffe066;
-      text-decoration: none;
-    }
-
-    @media (max-width: 375px) {
+   @media (max-width: 375px) {
       .newyear-heading {
         font-size: 37px;
       }
     }
 
-    /* Name Screen */
-    #nameScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      z-index: 10;
-      text-align: center;
-    }
 
-    #nameScreen input {
-      width: 70%;
-      max-width: 300px;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 18px;
-      outline: none;
-      text-align: center;
-    }
-
-    #nameScreen button {
-      padding: 10px 24px;
-      font-size: 18px;
-      border: none;
-      background: #ffe066;
-      color: black;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .fade-out {
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-  </style>
+.fade-out{opacity:0;transition:1s}
+</style>
 </head>
 
 <body>
 
-  <!-- NAME ASK SCREEN -->
-  <div id="nameScreen">
-    <h2 style="font-size: 26px;">What's your name?</h2>
-    <input type="text" id="username" placeholder="Enter your name" />
-    <button onclick="showMainPage()">Continue</button>
-  </div>
+<div id="nameScreen">
+<h2>Want New Year Surprise?</h2>
+<input id="username" placeholder="Enter your name"/>
+<button onclick="showMain()">Continue</button>
+</div>
 
-  <canvas id="fireworksCanvas"></canvas>
+<canvas id="fireworksCanvas"></canvas>
 
-  <div class="container">
+<div class="container">
     <h1 id="wishText" class="newyear-heading">Happy New Year</h1>
-    <h2 id="shopName"></h2>
-    <p id="shopDesc"></p>
-    <div class="contact-box">
-      <h3>Contact Us</h3>
+<h2 id="shopName"></h2>
 
-      <div class="social-links">
+<button id="offerBtn" class="offer-btn" onclick="goInsta()" style="display:none">
+Follow our Instagram for exclusive offer
+</button>
 
-  <a id="callBtn" href="#" style="display:none">
-    <i class="fa-solid fa-phone"></i>
-  </a>
-
-  <a id="whatsappBtn" href="#" target="_blank" style="display:none">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
-
-  <a id="locationBtn" href="#" target="_blank" style="display:none">
-    <i class="fa-solid fa-location-dot"></i>
-  </a>
-
-  <a id="instaBtn" href="#" target="_blank" style="display:none">
-    <i class="fa-brands fa-instagram"></i>
-  </a>
+<div id="offerText" class="offer-text" style="display:none"></div>
 
 </div>
 
-    </div>
-
-   <footer style="text-align:center; padding:12px 8px; font-size:16px;">
+  <footer style="text-align:center; padding:12px 8px; font-size:16px;">
   
   <span style="color:#ffffff;">
     © Since 2018
@@ -232,10 +150,67 @@
   </a>
 
 </footer>
+</div>
 
-  </div>
+<audio id="bgSound" src="assets/crackers.mp3" loop></audio>
 
-  <!-- Fireworks Script -->
+<script>
+function showMain(){
+let name=document.getElementById("username").value||"Friend";
+localStorage.setItem("nyName",name);
+document.getElementById("bgSound").play();
+document.getElementById("nameScreen").classList.add("fade-out");
+setTimeout(()=>document.getElementById("nameScreen").style.display="none",800);
+document.getElementById("wishText").innerHTML=`Happy New Year<br>${name}`;
+}
+
+const params=new URLSearchParams(location.search);
+const shopId=params.get("id");
+
+fetch("https://script.google.com/macros/s/AKfycbykeCX5c6arlIVAGqSOUbHBeLGo7NVwJ6O17A7Wia3jjkWW3pl34J5prNTdEJiJLAA/exec?id="+shopId)
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("shopName").innerText=`— ${d.shop_name} —`;
+
+if (localStorage.getItem("followed_" + shopId)) {
+  document.getElementById("offerText").innerHTML =
+    `Congratulations!<br>${d.offer_amount}`;
+  document.getElementById("offerText").style.display = "block";
+} else {
+  document.getElementById("offerBtn").style.display = "inline-block";
+}
+
+
+window.instaLink = d.instagram;
+window.offerAmount = d.offer_amount;
+
+// 🔥 NEW: dynamic button text
+if (d.button_text) {
+  document.getElementById("offerBtn").innerText = d.button_text;
+}
+
+if(d.phone){
+callBtn.href="tel:"+d.phone;
+callBtn.style.display="flex";
+}
+if(d.whatsapp){
+waBtn.href="https://wa.me/"+d.whatsapp;
+waBtn.style.display="flex";
+}
+if(d.instagram){
+instaBtn.href=d.instagram;
+instaBtn.style.display="flex";
+}
+});
+
+function goInsta(){
+localStorage.setItem("followed_"+shopId,true);
+window.open(instaLink,"_blank");
+setTimeout(()=>location.reload(),1500);
+}
+</script>
+
+<!-- Fireworks Script -->
   <script>
     // CONTINUE → SAVE NAME → SHOW MAIN PAGE + PLAY AUDIO
     function showMainPage() {
@@ -354,50 +329,6 @@
 
     animate();
   </script>
-
-  <!-- Sound -->
-  <audio id="bgSound" src="assets/crackers.mp3" loop></audio>
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const shopId = params.get("id");
-
-  fetch("https://script.google.com/macros/s/AKfycbzRFW_7pAQsfmSMPPloWVwO5iUBd6VzfXdvCpSuR6Xk8CtsDFwF8nJnFpEXW0PGoUh6/exec?id=" + shopId)
-    .then(res => res.json())
-    .then(data => {
-
-      document.getElementById("shopName").innerText =
-        `— ${data.shop_name} —`;
-
-      document.getElementById("shopDesc").innerText =
-        data.description;
-
-      if (data.phone) {
-        const call = document.getElementById("callBtn");
-        call.href = "tel:" + data.phone;
-        call.style.display = "flex";
-      }
-
-      if (data.whatsapp) {
-        const wa = document.getElementById("whatsappBtn");
-        wa.href = "https://wa.me/" + data.whatsapp;
-        wa.style.display = "flex";
-      }
-
-      if (data.location) {
-        const loc = document.getElementById("locationBtn");
-        loc.href = data.location;
-        loc.style.display = "flex";
-      }
-
-      if (data.instagram) {
-        const insta = document.getElementById("instaBtn");
-        insta.href = data.instagram;
-        insta.style.display = "flex";
-      }
-
-    })
-    .catch(() => alert("Invalid shop link"));
-</script>
 
 </body>
 </html>
