@@ -8,327 +8,245 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:#000;color:#fff;text-align:center;overflow-x:hidden}
-
-#fireworksCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1}
-
-.container{width:90%;max-width:600px;margin:auto;padding:60px 0}
-
-  h1 {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Poppins, sans-serif;
+    }
+    body {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
+      padding: 60px 0;
+    }
+    h1 {
       font-size: 45px;
       font-weight: 700;
       color: #ffe066;
-      text-shadow: 0 0 21px #ffcc00}
-	
-h2{margin-top:45px;font-size:24px;color:#ffcd4d}
+      text-shadow: 0 0 21px #ffcc00;
+    }
+    h2 {
+      margin-top: 45px;
+      font-size: 24px;
+      color: #ffcd4d;
+    }
+    .offer-btn {
+      margin-top: 40px;
+      padding: 16px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #ffe066;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .offer-text {
+      margin-top: 50px;
+      margin-bottom: 75px;
+      font-size: 28px;
+      color: #7CFF6B;
+      font-weight: 700;
+    }
 
-.offer-btn{
-margin-top:40px;
-padding:16px 28px;
-font-size:18px;
-border:none;
-border-radius:10px;
-background:#ffe066;
-color:#000;
-font-weight:700;
-cursor:pointer;
+/* LOADING SCREEN */
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  z-index:10;
 }
 
-.offer-text{
-margin-top:50px;
-margin-bottom: 75px;
-font-size:28px;
-color:#7CFF6B;
-font-weight:700;
+.loader{
+  width:50px;
+  height:50px;
+  border:5px solid #333;
+  border-top:5px solid #ffe066;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
 }
 
-.contact-box{
-margin-top:45px;
-padding:35px;
-background:rgba(255,255,255,0.07);
-border-radius:16px;
+@keyframes spin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
 }
 
-.social-links{
-display:flex;
-justify-content:center;
-gap:16px;
-margin-top:15px;
+#unlockBtn{
+  padding:10px 26px;
+  font-size:18px;
+  background:#ffe066;
+  color:#000;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  display:none;
 }
-
-.social-links a{
-width:48px;height:48px;
-border-radius:50%;
-background:rgba(255,255,25s5,0.12);
-display:flex;align-items:center;justify-content:center;
-font-size:20px;color:#fff;
-}
-
-#nameScreen{
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:20px;
-z-index:10;
-}
-
-#nameScreen input{
-padding:12px;
-font-size:18px;
-border-radius:8px;
-border:none;
-text-align:center;
-}
-
-#nameScreen button{
-padding:10px 24px;
-font-size:18px;
-background:#ffe066;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-}
-
-   @media (max-width: 375px) {
+@media (max-width: 375px) {
       .newyear-heading {
         font-size: 37px;
       }
     }
-
-
-.fade-out{opacity:0;transition:1s}
+    .fade-out {
+      opacity: 0;
+      transition: 1s;
+    }
 </style>
 </head>
 
 <body>
 
-<div id="nameScreen">
-<h2>Want New Year Surprise?</h2>
-<input id="username" placeholder="Enter your name"/>
-<button onclick="showMain()">Continue</button>
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="loader"></div>
+  <button id="unlockBtn" onclick="unlockPage()">Unlock</button>
 </div>
 
 <canvas id="fireworksCanvas"></canvas>
 
-<div class="container">
-    <h1 id="wishText" class="newyear-heading">Happy New Year</h1>
-<h2 id="shopName"></h2>
+<div class="container" id="mainContent">
+  <h1 class="newyear-heading">Happy New Year</h1>
+  <h2 id="shopName"></h2>
 
-<button id="offerBtn" class="offer-btn" onclick="goInsta()" style="display:none">
-Follow our Instagram for exclusive offer
-</button>
+  <button id="offerBtn" class="offer-btn" onclick="goInsta()" style="display:none">
+    Follow our Instagram for exclusive offer
+  </button>
 
-<div id="offerText" class="offer-text" style="display:none"></div>
-
+  <div id="offerText" class="offer-text" style="display:none"></div>
 </div>
 
-  <footer style="text-align:center; padding:12px 8px; font-size:16px;">
-  
-  <span style="color:#ffffff;">
-    © Since 2018
-  </span>
-
-  &nbsp;|&nbsp;
-
-  <span style="color:#49B618; font-weight:780;">
-    paper 'n' print
-  </span>
-
-  &nbsp;|&nbsp;
-
-  <a 
-    href="https://wa.me/918951337609?text=What's%20the%20rate%20for%20the%20digital%20e%20cards"
-    target="_blank"
-    style="color:#ffffff; text-decoration:none; font-weight:500;"
-	 <i class="fa-brands fa-whatsapp"></i>
-  </a>
-
-</footer>
-</div>
+<footer style="text-align:center; padding:12px 8px; font-size:16px;">
+    <span style="color:#ffffff;">© Since 2018</span> &nbsp;|&nbsp;
+    <span style="color:#49B618; font-weight:780;">paper 'n' print</span> &nbsp;|&nbsp;
+    <a href="https://wa.me/918951337609?text=What's%20the%20rate%20for%20the%20digital%20e%20cards" target="_blank" style="color:#ffffff; text-decoration:none; font-weight:500;">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </footer>
 
 <audio id="bgSound" src="assets/crackers.mp3" loop></audio>
 
 <script>
-function showMain(){
-let name=document.getElementById("username").value||"Friend";
-localStorage.setItem("nyName",name);
-document.getElementById("bgSound").play();
-document.getElementById("nameScreen").classList.add("fade-out");
-setTimeout(()=>document.getElementById("nameScreen").style.display="none",800);
-document.getElementById("wishText").innerHTML=`Happy New Year<br>${name}`;
+/* SHOW UNLOCK AFTER 2 SECONDS */
+setTimeout(()=>{
+  document.querySelector(".loader").style.display="none";
+  document.getElementById("unlockBtn").style.display="block";
+},2000);
+
+function unlockPage(){
+  document.getElementById("loadingScreen").style.display="none";
+  document.getElementById("mainContent").style.display="block";
+  document.getElementById("bgSound").play();
 }
 
+/* SHOP DATA + OFFER LOGIC */
 const params=new URLSearchParams(location.search);
 const shopId=params.get("id");
 
 fetch("https://script.google.com/macros/s/AKfycbykeCX5c6arlIVAGqSOUbHBeLGo7NVwJ6O17A7Wia3jjkWW3pl34J5prNTdEJiJLAA/exec?id="+shopId)
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("shopName").innerText=`— ${d.shop_name} —`;
+  shopName.innerText=`— ${d.shop_name} —`;
 
-if (localStorage.getItem("followed_" + shopId)) {
-  document.getElementById("offerText").innerHTML =
-    `Congratulations!<br>${d.offer_amount}`;
-  document.getElementById("offerText").style.display = "block";
-} else {
-  document.getElementById("offerBtn").style.display = "inline-block";
-}
+  if(localStorage.getItem("followed_"+shopId)){
+    offerText.innerHTML=`Congratulations!<br>${d.offer_amount}`;
+    offerText.style.display="block";
+  }else{
+    offerBtn.style.display="inline-block";
+  }
 
-
-window.instaLink = d.instagram;
-window.offerAmount = d.offer_amount;
-
-// 🔥 NEW: dynamic button text
-if (d.button_text) {
-  document.getElementById("offerBtn").innerText = d.button_text;
-}
-
-if(d.phone){
-callBtn.href="tel:"+d.phone;
-callBtn.style.display="flex";
-}
-if(d.whatsapp){
-waBtn.href="https://wa.me/"+d.whatsapp;
-waBtn.style.display="flex";
-}
-if(d.instagram){
-instaBtn.href=d.instagram;
-instaBtn.style.display="flex";
-}
+  window.instaLink=d.instagram;
 });
 
 function goInsta(){
-localStorage.setItem("followed_"+shopId,true);
-window.open(instaLink,"_blank");
-setTimeout(()=>location.reload(),1500);
+  localStorage.setItem("followed_"+shopId,true);
+  window.open(instaLink,"_blank");
+  setTimeout(()=>location.reload(),1500);
 }
 </script>
 
-<!-- Fireworks Script -->
-  <script>
-    // CONTINUE → SAVE NAME → SHOW MAIN PAGE + PLAY AUDIO
-    function showMainPage() {
-      let name = document.getElementById("username").value.trim();
-      if (name === "") name = "Friend";
-      localStorage.setItem("nyName", name);
+<script>
+/* FIREWORKS */
+const canvas=document.getElementById("fireworksCanvas");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight};
 
-      // PLAY AUDIO HERE (USER CLICKED BUTTON)
-      document.getElementById("bgSound").play();
+function r(min,max){return Math.random()*(max-min)+min}
 
-      document.getElementById("nameScreen").classList.add("fade-out");
-
-      setTimeout(() => {
-        document.getElementById("nameScreen").style.display = "none";
-      }, 1000);
-
-      const userName = localStorage.getItem("nyName") || "Friend";
-      document.getElementById("wishText").innerHTML =
-        `Happy New Year<br>${userName}`;
-    }
-
-    const canvas = document.getElementById("fireworksCanvas");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-
-    onresize = () => {
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
-    };
-
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    class Firework {
-      constructor() {
-        this.x = random(0, canvas.width);
-        this.y = canvas.height;
-        this.targetY = random(50, canvas.height / 2);
-        this.speed = random(3, 6);
-        this.boom = false;
-        this.particles = [];
-      }
-
-      update() {
-        if (!this.boom) {
-          this.y -= this.speed;
-          if (this.y <= this.targetY) {
-            this.boom = true;
-            for (let i = 0; i < 40; i++) {
-              this.particles.push(new Particle(this.x, this.y));
-            }
-          }
-        }
-      }
-
-      draw() {
-        if (!this.boom) {
-          ctx.fillStyle = "white";
-          ctx.fillRect(this.x, this.y, 3, 6);
-        }
+class Firework{
+  constructor(){
+    this.x=r(0,canvas.width);
+    this.y=canvas.height;
+    this.t=r(50,canvas.height/2);
+    this.s=r(3,6);
+    this.b=false;
+    this.p=[];
+  }
+  update(){
+    if(!this.b){
+      this.y-=this.s;
+      if(this.y<=this.t){
+        this.b=true;
+        for(let i=0;i<40;i++)this.p.push(new Particle(this.x,this.y));
       }
     }
+  }
+  draw(){if(!this.b){ctx.fillStyle="#fff";ctx.fillRect(this.x,this.y,3,6)}}
+}
 
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.speedX = random(-3, 3);
-        this.speedY = random(-3, 3);
-        this.alpha = 1;
-      }
+class Particle{
+  constructor(x,y){
+    this.x=x;this.y=y;
+    this.vx=r(-3,3);this.vy=r(-3,3);
+    this.a=1;
+  }
+  update(){this.x+=this.vx;this.y+=this.vy;this.a-=0.02}
+  draw(){
+    ctx.fillStyle=`rgba(255,200,80,${this.a})`;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,3,0,Math.PI*2);
+    ctx.fill();
+  }
+}
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.02;
-      }
-
-      draw() {
-        ctx.fillStyle = `rgba(255,200,80,${this.alpha})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    let fireworks = [];
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (Math.random() < 0.05) {
-        fireworks.push(new Firework());
-      }
-
-      fireworks = fireworks.filter(f => !f.boom || f.particles.length > 0);
-
-      fireworks.forEach(f => {
-        f.update();
-        f.draw();
-
-        if (f.boom) {
-          f.particles.forEach((p, i) => {
-            p.update();
-            p.draw();
-            if (p.alpha <= 0) f.particles.splice(i, 1);
-          });
-        }
+let f=[];
+(function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(Math.random()<0.05)f.push(new Firework());
+  f.forEach((fw,i)=>{
+    fw.update();fw.draw();
+    if(fw.b){
+      fw.p.forEach((p,j)=>{
+        p.update();p.draw();
+        if(p.a<=0)fw.p.splice(j,1);
       });
-
-      requestAnimationFrame(animate);
+      if(fw.p.length===0)f.splice(i,1);
     }
-
-    animate();
-  </script>
+  });
+  requestAnimationFrame(animate);
+})();
+</script>
 
 </body>
 </html>
