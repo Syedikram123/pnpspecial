@@ -165,17 +165,21 @@ const shopId=params.get("id");
 fetch("https://script.google.com/macros/s/AKfycbykeCX5c6arlIVAGqSOUbHBeLGo7NVwJ6O17A7Wia3jjkWW3pl34J5prNTdEJiJLAA/exec?id="+shopId)
 .then(r=>r.json())
 .then(d=>{
-  shopName.innerText=`— ${d.shop_name} —`;
+  shopName.innerText = `— ${d.shop_name} —`;
 
-  if(localStorage.getItem("followed_"+shopId)){
-    offerText.innerHTML=`Congratulations!<br>${d.offer_amount}`;
-    offerText.style.display="block";
-  }else{
-    offerBtn.style.display="inline-block";
+  if (localStorage.getItem("followed_" + shopId)) {
+    offerText.innerHTML = `Congratulations!<br>${d.offer_amount}`;
+    offerText.style.display = "block";
+  } else {
+    offerBtn.style.display = "inline-block";
+
+    // ✅ THIS IS THE MISSING LINE
+    offerBtn.innerText = d.button_text || "Follow our Instagram for exclusive offer";
   }
 
-  window.instaLink=d.instagram;
+  window.instaLink = d.instagram;
 });
+
 
 function goInsta(){
   localStorage.setItem("followed_"+shopId,true);
